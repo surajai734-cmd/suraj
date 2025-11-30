@@ -1139,39 +1139,6 @@
                 grid-template-columns: 1fr;
             }
         }
-        
-        .music-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .music-btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .music-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.1);
-        }
-         @keyframes firework {
-            0% { transform: translate(0, 0); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
-        }
 
         @media (max-width: 576px) {
             .hero-content h1 {
@@ -1379,7 +1346,7 @@
                 <button class="filter-btn" data-filter="design">Design</button>
                 <button class="filter-btn" data-filter="web">Web</button>
                 <button class="filter-btn" data-filter="app">App</button>
-                <button class="filter-btn" data-filter="branding">Branding
+                <button class="filter-btn" data-filter="branding">Branding</button>
             </div>
             
             <div class="portfolio-grid">
@@ -1634,7 +1601,8 @@
         </div>
     </footer>
     
-    <audio id="birthdayMusic" autoplayloop>
+    <!-- Audio Element for Birthday Song -->
+    <audio id="birthdayMusic" autoplay loop>
         <source src="videoplayback (1).m4a" type="audio/mpeg">
     </audio>
 
@@ -1644,20 +1612,14 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        // Initialize variables
-        let currentStep = 1;
-        const totalSteps = 15;
-        const music = document.getElementById('birthdayMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        let musicPlaying = false;
-        let userName = "Friend";
-        
-           // Try to play music
-            music.play().catch(e => {
-                console.log("Music play failed:", e);
-            });
-        
         document.addEventListener('DOMContentLoaded', function() {
+            // Auto-play the birthday song
+            const birthdayMusic = document.getElementById('birthdayMusic');
+            birthdayMusic.play().catch(function(error) {
+                console.log('Autoplay was prevented:', error);
+                // If autoplay is prevented, show a play button or handle it as needed
+            });
+
             // Mobile Menu Toggle
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
@@ -1808,36 +1770,6 @@
                 });
             }
         });
-         // Music controls
-        musicToggle.addEventListener('click', function() {
-            if (musicPlaying) {
-                music.autoplay();
-                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                musicPlaying = false;
-            } else {
-                music.play().catch(e => {
-                    console.log("Audio play failed:", e);
-                });
-                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                musicPlaying = true;
-            }
-        });
-        
-         // Enable audio on first user interaction
-        document.body.addEventListener('click', function() {
-            music.play().catch(e => console.log("Music play failed"));
-        }, { once: true });
-
-        // Initial effects
-        window.onload = function() {
-            createConfetti();
-        };
     </script>
 </body>
-
 </html>
-
-
-
-
-
