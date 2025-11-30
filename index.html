@@ -1600,6 +1600,10 @@
             </div>
         </div>
     </footer>
+    
+    <audio id="birthdayMusic" autoplayloop>
+        <source src="videoplayback (1).m4a" type="audio/mpeg">
+    </audio>
 
     <!-- Back to Top Button -->
     <a href="#home" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
@@ -1758,9 +1762,24 @@
                 });
             }
         });
+         // Music controls
+        musicToggle.addEventListener('click', function() {
+            if (musicPlaying) {
+                music.autoplay();
+                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                musicPlaying = false;
+            } else {
+                music.play().catch(e => {
+                    console.log("Audio play failed:", e);
+                });
+                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                musicPlaying = true;
+            }
+        });
     </script>
 </body>
 
 </html>
+
 
 
