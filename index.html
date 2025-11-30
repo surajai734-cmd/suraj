@@ -1644,6 +1644,19 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
+        // Initialize variables
+        let currentStep = 1;
+        const totalSteps = 15;
+        const music = document.getElementById('birthdayMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let musicPlaying = false;
+        let userName = "Friend";
+        
+           // Try to play music
+            music.play().catch(e => {
+                console.log("Music play failed:", e);
+            });
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile Menu Toggle
             const menuToggle = document.querySelector('.menu-toggle');
@@ -1809,10 +1822,21 @@
                 musicPlaying = true;
             }
         });
+        
+         // Enable audio on first user interaction
+        document.body.addEventListener('click', function() {
+            music.play().catch(e => console.log("Music play failed"));
+        }, { once: true });
+
+        // Initial effects
+        window.onload = function() {
+            createConfetti();
+        };
     </script>
 </body>
 
 </html>
+
 
 
 
