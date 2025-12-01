@@ -1073,6 +1073,50 @@
             transform: translateY(-5px) scale(1.1);
         }
 
+        /* Music Player Styles */
+        .music-player {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .music-toggle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .music-info {
+            color: var(--light);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         /* Responsive Styles */
         @media (max-width: 1200px) {
             .hero-content h1 {
@@ -1138,6 +1182,13 @@
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .music-player {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1160,10 +1211,26 @@
             .contact-form {
                 padding: 2rem;
             }
+            
+            .music-player {
+                padding: 0.75rem 1rem;
+            }
+            
+            .music-info {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Music Player -->
+    <div class="music-player">
+        <button class="music-toggle" id="musicToggle">
+            <i class="fas fa-play"></i>
+        </button>
+        <div class="music-info" id="musicInfo">Click to play music</div>
+    </div>
+
     <!-- Header -->
     <header id="header">
         <div class="container">
@@ -1602,7 +1669,7 @@
     </footer>
     
     <!-- Audio Element for Birthday Song -->
-    <audio id="birthdayMusic" autoplay loop>
+    <audio id="birthdayMusic" loop>
         <source src="videoplayback (1).m4a" type="audio/mpeg">
     </audio>
 
@@ -1613,11 +1680,49 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Auto-play the birthday song
+            // Music Player Functionality
             const birthdayMusic = document.getElementById('birthdayMusic');
-            birthdayMusic.play().catch(function(error) {
-                console.log('Autoplay was prevented:', error);
-                // If autoplay is prevented, show a play button or handle it as needed
+            const musicToggle = document.getElementById('musicToggle');
+            const musicInfo = document.getElementById('musicInfo');
+            let isPlaying = false;
+
+            // Function to play music
+            function playMusic() {
+                birthdayMusic.play().then(() => {
+                    isPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                    musicInfo.textContent = 'Music is playing';
+                    musicToggle.style.background = 'linear-gradient(135deg, var(--success), var(--primary))';
+                }).catch(error => {
+                    console.log('Music play failed:', error);
+                    musicInfo.textContent = 'Click to play music';
+                });
+            }
+
+            // Function to pause music
+            function pauseMusic() {
+                birthdayMusic.pause();
+                isPlaying = false;
+                musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+                musicInfo.textContent = 'Music paused';
+                musicToggle.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+            }
+
+            // Toggle music on button click
+            musicToggle.addEventListener('click', function() {
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            });
+
+            // Try to auto-play music after user interaction
+            document.addEventListener('click', function firstInteraction() {
+                if (!isPlaying) {
+                    playMusic();
+                }
+                document.removeEventListener('click', firstInteraction);
             });
 
             // Mobile Menu Toggle
