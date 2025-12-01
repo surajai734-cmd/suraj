@@ -1669,7 +1669,7 @@
     </footer>
     
     <!-- Audio Element for Birthday Song -->
-    <audio id="birthdayMusic" autoplayloop>
+    <audio id="birthdayMusic" autoplay loop>
         <source src="videoplayback (1).m4a" type="audio/mpeg">
     </audio>
 
@@ -1695,7 +1695,7 @@
                     musicToggle.style.background = 'linear-gradient(135deg, var(--success), var(--primary))';
                 }).catch(error => {
                     console.log('Music play failed:', error);
-                    musicInfo.textContent = 'autoplay';
+                    musicInfo.textContent = 'click any where';
                 });
             }
 
@@ -1878,5 +1878,6 @@
     </script>
 </body>
 </html>
+
 
 
